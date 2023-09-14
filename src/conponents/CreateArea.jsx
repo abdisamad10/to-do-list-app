@@ -1,8 +1,11 @@
 import { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
-import { Fab } from "@mui/material";
+import { Fab} from "@mui/material";
 
 function CreateArea (props) {
+
+    const [isExpended, setExpended] = useState(false);
+
     const [note, setNote] = useState({
        title: "",
        content: ""
@@ -26,27 +29,36 @@ function CreateArea (props) {
         });
         event.preventDefault();
     }
+
+    function expend (){
+        setExpended(true);
+    }
     return (
         <div >
             <form className="create-note">
-            <input 
-                type="text"
-                name="title"
-                onChange={handleChange}
-                value={note.title}
-                placeholder="Title"
-
-            />
+                {isExpended && (
+                      <input 
+                      type="text"
+                      name="title"
+                      onChange={handleChange}
+                      value={note.title}
+                      placeholder="Title"
+      
+                  />
+                )}
+          
             <textarea 
                     name="content" 
-                    rows="3"
+                    rows={isExpended ? 3 : 1}
+                    onClick={expend}
                     onChange={handleChange}
                     value={note.content}
-                    placeholder="Write content..."
+                    placeholder="Take a note..."
                     />
                     <Fab onClick={submitNote}>
                         <AddIcon />
                     </Fab>
+                   
                     </form>
         </div>
     )
